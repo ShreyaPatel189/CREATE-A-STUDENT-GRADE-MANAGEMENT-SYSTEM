@@ -1,0 +1,76 @@
+import java.util.*;
+
+public class task2 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Store Student Name -> Grade
+        HashMap<String, Integer> studentGrades = new HashMap<>();
+
+        while (true) {
+            System.out.println("\n--- Student Grade Management System ---");
+            System.out.println("1. Add Student & Grade");
+            System.out.println("2. View All Students");
+            System.out.println("3. View Sorted Report (By Grade)");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = sc.nextInt();
+            sc.nextLine(); // clear buffer
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter Student Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Grade (0 - 100): ");
+                    int grade = sc.nextInt();
+
+                    studentGrades.put(name, grade);
+                    System.out.println("Student added successfully.");
+                    break;
+
+                case 2:
+                    if (studentGrades.isEmpty()) {
+                        System.out.println("No student records found.");
+                    } else {
+                        System.out.println("\nStudent Grades:");
+                        for (Map.Entry<String, Integer> entry : studentGrades.entrySet()) {
+                            System.out.println(entry.getKey() + " : " + entry.getValue());
+                        }
+                    }
+                    break;
+
+                case 3:
+                    if (studentGrades.isEmpty()) {
+                        System.out.println("No data available for sorting.");
+                        break;
+                    }
+
+                    // Convert HashMap to List for sorting
+                    ArrayList<Map.Entry<String, Integer>> list =
+                            new ArrayList<>(studentGrades.entrySet());
+
+                    // Sort by grades (Descending)
+                    list.sort((a, b) -> b.getValue() - a.getValue());
+
+                    System.out.println("\n--- Student Report (Sorted by Grade) ---");
+                    for (Map.Entry<String, Integer> entry : list) {
+                        System.out.println(entry.getKey() + " : " + entry.getValue());
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Exiting Student Grade Management System.");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+}
